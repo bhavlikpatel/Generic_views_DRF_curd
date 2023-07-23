@@ -1,15 +1,27 @@
-from django.shortcuts import render
+'''from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework import status
-from django.http import Http404
+from django.http import Http404'''
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
+from .generic import UserRetriveUpdateDelete
 
 from .models import User
 from .serializers import UserSerializer
 
 
+class UserRetrieveUpdateDestroyAPI(UserRetriveUpdateDelete):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserListCreateAPIView(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer    
+
+
+'''Using old and long way
 class UserApiList(APIView):
 
     def get_user (request, pk):
@@ -46,4 +58,4 @@ class UserApiDetail(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)'''
